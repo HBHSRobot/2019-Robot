@@ -10,6 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,7 +29,11 @@ public class Robot extends IterativeRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-
+  DifferentialDrive myRobot;
+	Joystick stickl, stickr;
+	Timer timer;
+	SpeedControllerGroup left;
+	SpeedControllerGroup right;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -33,7 +43,16 @@ public class Robot extends IterativeRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    left = new SpeedControllerGroup(new Talon(1), new Talon(2));
+		right = new SpeedControllerGroup(new Talon(3), new Talon(4));
+		myRobot = new DifferentialDrive(left, right);
+		
+		stickl = new Joystick(0);
+		stickr = new Joystick(1);
+    
   }
+  
+  
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -65,6 +84,7 @@ public class Robot extends IterativeRobot {
     // defaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
   }
+  
 
   /**
    * This function is called periodically during autonomous.
@@ -81,12 +101,17 @@ public class Robot extends IterativeRobot {
         break;
     }
   }
+  @Override
+	public void teleopInit() {
+		
+	}
 
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic() {
+    myRobot.tankDrive(stickl.getY(), stickr.getY()); 
   }
 
   /**
@@ -96,3 +121,5 @@ public class Robot extends IterativeRobot {
   public void testPeriodic() {
   }
 }
+
+
