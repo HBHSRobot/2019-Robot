@@ -43,8 +43,8 @@ public class Robot extends IterativeRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    left = new SpeedControllerGroup(new Talon(1), new Talon(2));
-		right = new SpeedControllerGroup(new Talon(3), new Talon(4));
+    left = new SpeedControllerGroup(new Victor(1), new Victor(2));
+		right = new SpeedControllerGroup(new Victor(3), new Victor(4));
 		myRobot = new DifferentialDrive(left, right);
 		
 		stickl = new Joystick(0);
