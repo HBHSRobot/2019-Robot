@@ -130,11 +130,12 @@ public class Robot extends IterativeRobot {
     Timer timer = new Timer();
     LineFollower sensorOne = new LineFollower(0);
     LineFollower sensorTwo = new LineFollower(1);
+    LineFollower sensorThree = new LineFollower(2);
     System.out.println("test");
     while (true){
-      /*System.out.println(sensorOne.returnvalue()
-       + "  " + sensorTwo.returnvalue()); */
-       System.out.println(sensorOne.returnvalue());
+       System.out.println(sensorOne.returnvalue()+"  "
+       + sensorTwo.returnvalue() + "  "
+       + sensorThree.returnvalue());
        
        timer.delay(1);
     } 

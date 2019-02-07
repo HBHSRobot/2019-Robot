@@ -4,11 +4,24 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 public class LineFollower {
     int portVar;
+    int thresholdVar = 2500;
     LineFollower(int port) {
-        portVar = port;
+        this.portVar = port;
     }
-    AnalogInput inputObject = new AnalogInput(portVar);
+
+
+    AnalogInput sensor = new AnalogInput(portVar);
     public int returnvalue() {
-        return inputObject.getValue();
+        return sensor.getValue();
     }
+    
+    public boolean color() {
+        if (sensor.getValue()>2500) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
 }
