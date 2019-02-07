@@ -96,8 +96,17 @@ public class Robot extends IterativeRobot {
       case kDefaultAuto:
       default:
         // Put default auto code here
-                
-      break;
+        Piston p = new Piston(0);
+        p.test();
+        /*Solenoid solenoidOne = new Solenoid(0);
+        System.out.println(1);
+        solenoidOne.set(true);
+        System.out.println(2);
+        Timer.delay(3);
+        System.out.println(4);
+        solenoidOne.set(false);
+        System.out.println(5);  */
+      //break;
     }
   }
   @Override
