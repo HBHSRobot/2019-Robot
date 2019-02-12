@@ -15,6 +15,10 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.Timer;
+// import com.ctre.phoenix.motorcontrol.can.*;
+// import com.ctre.phoenix.motorcontrol.ControlMode;
+// import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+// import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -96,16 +100,7 @@ public class Robot extends IterativeRobot {
       case kDefaultAuto:
       default:
         // Put default auto code here
-        Piston p = new Piston(0);
-        p.test();
-        /*Solenoid solenoidOne = new Solenoid(0);
-        System.out.println(1);
-        solenoidOne.set(true);
-        System.out.println(2);
-        Timer.delay(3);
-        System.out.println(4);
-        solenoidOne.set(false);
-        System.out.println(5);  */
+        //   */
       //break;
     }
   }
@@ -127,7 +122,8 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void testPeriodic() {
-    Timer timer = new Timer();
+    //Line Follower Sensor test
+    /*Timer timer = new Timer();
     LineFollower sensorOne = new LineFollower(0);
     LineFollower sensorTwo = new LineFollower(1);
     LineFollower sensorThree = new LineFollower(2);
@@ -138,7 +134,32 @@ public class Robot extends IterativeRobot {
        + sensorThree.returnvalue());
        
        timer.delay(1);
-    } 
+    } */
+
+
+    //Distance Sensor Test
+    /*DistanceSensor sensor = new DistanceSensor(3);
+        while(true)
+        {
+           if (sensor.getDistance() < 5)
+           {
+              left.stopMotor();
+              right.stopMotor();
+           }
+        }*/
+
+        
+        //Solenoid Test
+        /*Piston p = new Piston(0);
+        p.test();
+        Solenoid solenoidOne = new Solenoid(0);
+        System.out.println(1);
+        solenoidOne.set(true);
+        System.out.println(2);
+        Timer.delay(3);
+        System.out.println(4);
+        solenoidOne.set(false);
+        System.out.println(5);*/
   }
 }
 

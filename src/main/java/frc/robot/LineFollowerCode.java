@@ -6,7 +6,7 @@ public class LineFollowerCode {
     LineFollower sensorThree = new LineFollower(2);
     public void run() {
         while(!sensorOne.color()&&!sensorTwo.color()&&!sensorThree.color()){
-
+            
         }
     }
 }

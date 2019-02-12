@@ -15,6 +15,27 @@ public class Piston {
     Piston (int port) {
         num = port;
     }
+    public void loadCompressor() {
+        Compressor c = new Compressor();
+        Solenoid s = new Solenoid(num);
+        c.setClosedLoopControl(true);
+        while(!c.getPressureSwitchValue()) {
+            Timer.delay(.1);
+        }
+    }
+    public void move() {
+        Compressor c = new Compressor();
+        Solenoid s = new Solenoid(num);
+        c.setClosedLoopControl(true);
+        while(!c.getPressureSwitchValue()) {
+            Timer.delay(.1);
+        }
+        if (s.get()) {
+            s.set(false);
+        } else {
+            s.set(true);
+        }
+    }
     public void test(){
         Compressor c = new Compressor();
         Solenoid s = new Solenoid(num);
