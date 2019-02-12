@@ -16,7 +16,7 @@ public class LineFollower {
     }
     
     public boolean color() {
-        if (sensor.getValue()>2500) {
+        if (sensor.getValue()>thresholdVar) {
             return false;
         } else {
             return true;

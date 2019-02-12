@@ -33,7 +33,7 @@ public class Robot extends IterativeRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   DifferentialDrive myRobot;
 	Joystick stickl, stickr;
-	Timer timer;
+  Timer timer;
 	SpeedControllerGroup left;
 	SpeedControllerGroup right;
   /**
@@ -46,12 +46,12 @@ public class Robot extends IterativeRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     left = new SpeedControllerGroup(new Talon(1), new Talon(2));
-		right = new SpeedControllerGroup(new Talon(3), new Talon(4));
-		myRobot = new DifferentialDrive(left, right);
+    right = new SpeedControllerGroup(new Talon(3), new Talon(4));
+    
+    myRobot = new DifferentialDrive(left, right);
 		
 		stickl = new Joystick(0);
 		stickr = new Joystick(1);
-    
   }
   
   
