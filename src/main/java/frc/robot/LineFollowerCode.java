@@ -8,6 +8,7 @@ public class LineFollowerCode {
     LineFollower sensorThree = new LineFollower(2);
     DistanceSensor distanceSensor = new DistanceSensor();
     double goPoint; //distance from wall 
+    RobotTriggerDrive myRobot = new RobotTriggerDrive(0,1,2,3);
     public LineFollowerCode (double distance) {
         goPoint = distance;
     }
@@ -18,6 +19,7 @@ public class LineFollowerCode {
         } 
         if (sensorOne.color()){
             //drive forward until sensor two is triggered
+            while(!sensorTwo.color())
             //turn left motors until sensor one is triggered
             followline();
         } else if (sensorThree.color()) {
@@ -27,13 +29,17 @@ public class LineFollowerCode {
         }
     }
     public void followline() {
+        
         while (distanceSensor.getDistance()>goPoint) {
             if (sensorOne.color()) {
-                //slight right turn
+                //slight right turn   
+                myRobot.arcadeDrive(0, .05, true);
             } else if (sensorThree.color()) {
                 //slight left turn
+                myRobot.arcadeDrive(0, -.05, true);
             } else {
                 //slight move forward
+                myRobot.arcadeDrive(.05, 0, true);
             }
         }
     }

@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.*;
@@ -14,7 +13,8 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.Timer;
+
+
 // import com.ctre.phoenix.motorcontrol.can.*;
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 // import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -35,7 +35,8 @@ public class Robot extends IterativeRobot {
 	Joystick stickl, stickr;
   Timer timer;
 	SpeedControllerGroup left;
-	SpeedControllerGroup right;
+  SpeedControllerGroup right;
+  SpeedControllerGroup intake;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -47,6 +48,8 @@ public class Robot extends IterativeRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     left = new SpeedControllerGroup(new Talon(1), new Talon(2));
     right = new SpeedControllerGroup(new Talon(3), new Talon(4));
+
+    intake = new SpeedControllerGroup(new Victor(2), new Victor(3));
     
     myRobot = new DifferentialDrive(left, right);
 		
@@ -135,6 +138,7 @@ public class Robot extends IterativeRobot {
        
        timer.delay(1);
     } */
+     intake.set(.25);
 
 
     //Distance Sensor Test
@@ -147,7 +151,7 @@ public class Robot extends IterativeRobot {
               right.stopMotor();
            }
         }*/
-
+        
         
         //Solenoid Test
         /*Piston p = new Piston(0);
