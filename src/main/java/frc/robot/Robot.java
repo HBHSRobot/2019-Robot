@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.Trigger;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 
@@ -34,13 +34,21 @@ public class Robot extends IterativeRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  DifferentialDrive myRobot;
+  RobotTriggerDrive hbRobot;
 	Joystick stickl, stickr;
   Timer timer;
 	SpeedControllerGroup left;
   SpeedControllerGroup right;
   SpeedControllerGroup intake;
   SpeedControllerGroup ramp;
+  SpeedController leftDrive;
+  SpeedController rightDrive; 
+  RobotTriggerDrive drive;
+  int forwardsTrigger;
+  int backwardsTrigger;
+  int rotateAxis;
+  XboxController moveStick;
+   
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -50,18 +58,23 @@ public class Robot extends IterativeRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    // left = new SpeedControllerGroup(new Talon(1), new Talon(2));
-    // right = new SpeedControllerGroup(new Talon(3), new Talon(4));
-    ramp = new SpeedControllerGroup(new Victor(1), new Victor(0));
-    intake = new SpeedControllerGroup(new VictorSP(3), new VictorSP(2));
-    // SpeedController leftFront = new TalonSRX(1);
-    // leftBack = new Victor(1);
-    // myRobot = new DifferentialDrive(left, right);
-		
-		// stickl = new Joystick(0);
-    // stickr = new Joystick(1);
+    leftDrive = new SpeedControllerGroup(new VictorSP(5));
+    rightDrive = new SpeedControllerGroup(new VictorSP(4));
+    // hbRobot = new RobotDrive(leftDrive, rightDrive);
+
+    // stickl = new Joystick(0);
     
-    // RobotTriggerDrive drive = new RobotTriggerDrive(1,1,2,3);
+    final int forwardsTrigger = 3;
+    final int backwardsTrigger = 2;
+    final int rotateAxis = 4;
+    moveStick = new XboxController(0);
+    // stickr = new Joystick(1);
+ 
+    // ramp = new SpeedControllerGroup(new Victor(1), new Victor(0));
+    // intake = new SpeedControllerGroup(new VictorSP(3), new VictorSP(2));
+    
+    hbRobot = new RobotTriggerDrive(leftDrive, rightDrive);
+    // moveStick = new GenericHID(0);
   }
   
   
@@ -110,12 +123,12 @@ public class Robot extends IterativeRobot {
       case kDefaultAuto:
       default:
         // Put default auto code here
-        while(true)
-        {
-          System.out.println("test");
-          intake.set(.25);
-          System.out.println("test");
-        }
+        // while(true)
+        // {
+        //   System.out.println("test");
+        //   intake.set(.25);
+        //   System.out.println("RIO");
+        // }
         
         //   */
       //break;
@@ -123,7 +136,7 @@ public class Robot extends IterativeRobot {
   }
   @Override
 	public void teleopInit() {
-		
+    
 	}
 
   /**
@@ -131,7 +144,8 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
-    myRobot.tankDrive(stickl.getY(), stickr.getY()); 
+    // hbRobot.tankDrive(stickl.getY(), stickr.getY());
+    hbRobot.arcadeDrive(moveStick, forwardsTrigger, backwardsTrigger, rotateAxis);
   }
 
   /**
@@ -178,6 +192,10 @@ public class Robot extends IterativeRobot {
         System.out.println(4);
         solenoidOne.set(false);
         System.out.println(5);*/
+        System.out.println(1);
+        leftDrive.set(.15);
+        rightDrive.set(-.15);
+        System.out.println(2);
   }
 }
 

@@ -3,6 +3,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 // Start of RobotDriveXbox
 public class RobotTriggerDrive extends RobotDrive {
@@ -62,12 +64,12 @@ public class RobotTriggerDrive extends RobotDrive {
 	 * @param backwardsTrigger is the trigger axis being used to control the backward movement of the robot
 	 * @param rotateAxis is the axis being used to control the left & right movements of the robot
 	 */
-	public void arcadeDrive(GenericHID moveStick, final int forwardsTrigger, final int backwardsTrigger, final int rotateAxis) {
+	public void arcadeDrive(XboxController moveStick, final int forwardsTrigger, final int backwardsTrigger, final int rotateAxis) {
 		// Moves robot using both trigger axes
-		double moveValue = moveStick.getRawAxis(forwardsTrigger) - moveStick.getRawAxis(backwardsTrigger);
+		double moveValue = moveStick.getTriggerAxis(Hand.kRight) - moveStick.getTriggerAxis(Hand.kLeft);
 		
 		// Rotates robot left and right on a single axis
-		double rotateValue = moveStick.getRawAxis(rotateAxis);
+		double rotateValue = moveStick.getX(Hand.kLeft);
 		
 		// Drives robot at provided move and rotate values
 		arcadeDrive(moveValue, rotateValue, true);
