@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -48,6 +49,8 @@ public class Robot extends IterativeRobot {
   int backwardsTrigger;
   int rotateAxis;
   XboxController moveStick;
+  Piston p;
+  JoystickButton x;
    
   /**
    * This function is run when the robot is first started up and should be
@@ -67,7 +70,9 @@ public class Robot extends IterativeRobot {
     final int forwardsTrigger = 3;
     final int backwardsTrigger = 2;
     final int rotateAxis = 4;
+    p = new Piston();
     moveStick = new XboxController(0);
+    JoystickButton x = new JoystickButton(moveStick, 2);
     // stickr = new Joystick(1);
  
     // ramp = new SpeedControllerGroup(new Victor(1), new Victor(0));
@@ -122,6 +127,21 @@ public class Robot extends IterativeRobot {
         break;
       case kDefaultAuto:
       default:
+      p.loadCompressor();
+      Timer.delay(45);
+      while(true)
+      {
+        System.out.println("pls work");
+        p.moveIn();
+        Timer.delay(5);
+        System.out.println("pretty pls");
+        p.moveOut();
+        Timer.delay(5);
+        System.out.println("shit");
+      }
+      
+      // p.loadCompressor();
+      //   p.move();
         // Put default auto code here
         // while(true)
         // {
@@ -146,6 +166,10 @@ public class Robot extends IterativeRobot {
   public void teleopPeriodic() {
     // hbRobot.tankDrive(stickl.getY(), stickr.getY());
     hbRobot.arcadeDrive(moveStick, forwardsTrigger, backwardsTrigger, rotateAxis);
+    // if (x.get())
+    // {
+    //   p.move();
+    // }
   }
 
   /**
@@ -182,9 +206,9 @@ public class Robot extends IterativeRobot {
         
         
         //Solenoid Test
-        /*Piston p = new Piston(0);
+        Piston p = new Piston();
         p.test();
-        Solenoid solenoidOne = new Solenoid(0);
+        /*Solenoid solenoidOne = new Solenoid(0);
         System.out.println(1);
         solenoidOne.set(true);
         System.out.println(2);
@@ -192,10 +216,7 @@ public class Robot extends IterativeRobot {
         System.out.println(4);
         solenoidOne.set(false);
         System.out.println(5);*/
-        System.out.println(1);
-        leftDrive.set(.15);
-        rightDrive.set(-.15);
-        System.out.println(2);
+        
   }
 }
 

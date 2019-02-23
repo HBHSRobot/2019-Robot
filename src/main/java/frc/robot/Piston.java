@@ -4,34 +4,22 @@ import edu.wpi.first.wpilibj.Timer;
 
 
 public class Piston {
-    int num;
-    Piston (int port) {
-        num = port;
-    }
+    Solenoid s = new Solenoid(0);
     public void loadCompressor() {
         Compressor c = new Compressor();
-        Solenoid s = new Solenoid(num);
         c.setClosedLoopControl(true);
         while(!c.getPressureSwitchValue()) {
             Timer.delay(.1);
         }
     }
-    public void move() {
-        Compressor c = new Compressor();
-        Solenoid s = new Solenoid(num);
-        c.setClosedLoopControl(true);
-        while(!c.getPressureSwitchValue()) {
-            Timer.delay(.1);
-        }
-        if (s.get()) {
-            s.set(false);
-        } else {
-            s.set(true);
-        }
+    public void moveOut() {
+        s.set(true);
+    }
+    public void moveIn() {
+        s.set(false);
     }
     public void test(){
         Compressor c = new Compressor();
-        Solenoid s = new Solenoid(num);
         c.setClosedLoopControl(true);
         while(!c.getPressureSwitchValue()) {
         Timer.delay(.1);
