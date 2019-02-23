@@ -207,7 +207,7 @@ public class Robot extends IterativeRobot {
         
         //Solenoid Test
         Piston p = new Piston();
-        p.test();
+        p.work();
         /*Solenoid solenoidOne = new Solenoid(0);
         System.out.println(1);
         solenoidOne.set(true);
