@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 
 public class Piston {
+    boolean state = true;
     public void loadCompressor() {
         Compressor c = new Compressor();
         c.setClosedLoopControl(true);
@@ -19,7 +20,18 @@ public class Piston {
     public void moveIn() {
         
     Solenoid s = new Solenoid(0);
-        s.set(false);
+        while (true) {
+            System.out.println("Test 1");
+            if (state){
+                System.out.println("Test 2");
+                s.set(false);
+                state = false;
+            }
+            else {
+                System.out.println("Test 3");
+                break;
+            }
+        }
     }
     public void test(){
         
@@ -39,14 +51,5 @@ public class Piston {
             Timer.delay(5);
         }
     }
-    public void work() {
-        Compressor c = new Compressor();
-        Solenoid s = new Solenoid(0);
-        c.setClosedLoopControl(true);
-        while(!c.getPressureSwitchValue()) {
-        Timer.delay(.1);
-        }
-        Timer.delay(5);
-        s.set(false);
-    }
+    
 }

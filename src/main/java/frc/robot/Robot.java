@@ -127,31 +127,10 @@ public class Robot extends IterativeRobot {
         break;
       case kDefaultAuto:
       default:
-      p.loadCompressor();
-      Timer.delay(45);
-      while(true)
-      {
-        System.out.println("pls work");
-        p.moveIn();
-        Timer.delay(5);
-        System.out.println("pretty pls");
-        p.moveOut();
-        Timer.delay(5);
-        System.out.println("shit");
-      }
-      
-      // p.loadCompressor();
-      //   p.move();
-        // Put default auto code here
-        // while(true)
-        // {
-        //   System.out.println("test");
-        //   intake.set(.25);
-        //   System.out.println("RIO");
-        // }
-        
-        //   */
-      //break;
+      p.moveIn();
+
+
+      break;
     }
   }
   @Override
@@ -206,8 +185,8 @@ public class Robot extends IterativeRobot {
         
         
         //Solenoid Test
-        Piston p = new Piston();
-        p.work();
+        // Piston p = new Piston();
+        // p.work();
         /*Solenoid solenoidOne = new Solenoid(0);
         System.out.println(1);
         solenoidOne.set(true);
