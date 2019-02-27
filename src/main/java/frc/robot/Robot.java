@@ -49,8 +49,9 @@ public class Robot extends IterativeRobot {
   int backwardsTrigger;
   int rotateAxis;
   XboxController moveStick;
-  Piston p;
-  JoystickButton x;
+  JoystickButton x, a, b;
+  Solenoid s;
+  Compressor c;
    
   /**
    * This function is run when the robot is first started up and should be
@@ -70,9 +71,12 @@ public class Robot extends IterativeRobot {
     final int forwardsTrigger = 3;
     final int backwardsTrigger = 2;
     final int rotateAxis = 4;
-    p = new Piston();
+    // Solenoid s = new Solenoid(0);
+    // Compressor c = new Compressor();
     moveStick = new XboxController(0);
     JoystickButton x = new JoystickButton(moveStick, 2);
+    JoystickButton b = new JoystickButton(moveStick, 1);
+    JoystickButton a = new JoystickButton(moveStick, 0);
     // stickr = new Joystick(1);
  
     // ramp = new SpeedControllerGroup(new Victor(1), new Victor(0));
@@ -127,8 +131,9 @@ public class Robot extends IterativeRobot {
         break;
       case kDefaultAuto:
       default:
-      p.moveIn();
-
+      //Piston p = new Piston();
+      s.set(true);
+      // }
 
       break;
     }
@@ -145,9 +150,21 @@ public class Robot extends IterativeRobot {
   public void teleopPeriodic() {
     // hbRobot.tankDrive(stickl.getY(), stickr.getY());
     hbRobot.arcadeDrive(moveStick, forwardsTrigger, backwardsTrigger, rotateAxis);
-    // if (x.get())
+    // if (x.get()&&!s.get())
     // {
-    //   p.move();
+    //   s.set(true);
+    // }
+    // else if (x.get())
+    // {
+    //   s.set(false);
+    // }
+    // if (a.get())
+    // {
+    //    intake.set(.25);
+    // }
+    // if (b.get())
+    // {
+    //    ramp.set(.25);
     // }
   }
 

@@ -72,6 +72,7 @@ public class RobotTriggerDrive extends RobotDrive {
 		double rotateValue = moveStick.getX(Hand.kLeft);
 		
 		// Drives robot at provided move and rotate values
-		arcadeDrive(moveValue, rotateValue, true);
+		arcadeDrive(moveValue, -rotateValue-.03, true);
+		System.out.println(rotateValue);
 	} // End of method
 } // End of class
