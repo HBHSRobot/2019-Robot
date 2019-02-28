@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -52,6 +52,7 @@ public class Robot extends IterativeRobot {
   JoystickButton x, a, b;
   Solenoid s;
   Compressor c;
+  boolean buttonValueB, buttonValueY;
    
   /**
    * This function is run when the robot is first started up and should be
@@ -71,19 +72,23 @@ public class Robot extends IterativeRobot {
     final int forwardsTrigger = 3;
     final int backwardsTrigger = 2;
     final int rotateAxis = 4;
-    // Solenoid s = new Solenoid(0);
-    // Compressor c = new Compressor();
+    s = new Solenoid(0);
+    c = new Compressor();
     moveStick = new XboxController(0);
-    JoystickButton x = new JoystickButton(moveStick, 2);
-    JoystickButton b = new JoystickButton(moveStick, 1);
-    JoystickButton a = new JoystickButton(moveStick, 0);
+    x = new JoystickButton(moveStick, 2);
+    b = new JoystickButton(moveStick, 1);
+    a = new JoystickButton(moveStick, 0);
+
+    // buttonValueB = moveStick.getRawButton(2);
     // stickr = new Joystick(1);
  
-    // ramp = new SpeedControllerGroup(new Victor(1), new Victor(0));
+    ramp = new SpeedControllerGroup(new VictorSP(1), new VictorSP(0));
     // intake = new SpeedControllerGroup(new VictorSP(3), new VictorSP(2));
     
     hbRobot = new RobotTriggerDrive(leftDrive, rightDrive);
     // moveStick = new GenericHID(0);
+
+    CameraServer.getInstance().startAutomaticCapture();
   }
   
   
@@ -117,6 +122,7 @@ public class Robot extends IterativeRobot {
     // autoSelected = SmartDashboard.getString("Auto Selector",
     // defaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    // s.set(true);
   }
   
 
@@ -132,8 +138,15 @@ public class Robot extends IterativeRobot {
       case kDefaultAuto:
       default:
       //Piston p = new Piston();
-      s.set(true);
-      // }
+      Timer.delay(20);
+      // s.set(true);
+      // Timer.delay(1);
+      // s.set(false);
+      // // if (s.get())
+      // // {
+      // //   s.set(false);
+      // // }
+      // // }
 
       break;
     }
@@ -150,22 +163,47 @@ public class Robot extends IterativeRobot {
   public void teleopPeriodic() {
     // hbRobot.tankDrive(stickl.getY(), stickr.getY());
     hbRobot.arcadeDrive(moveStick, forwardsTrigger, backwardsTrigger, rotateAxis);
-    // if (x.get()&&!s.get())
-    // {
-    //   s.set(true);
-    // }
-    // else if (x.get())
-    // {
-    //   s.set(false);
-    // }
+    // s.set(true);
+      // if (s.get())
+      // {
+      //   s.set(false);
+      // }
+    if (moveStick.getRawButton(6)&&!s.get())
+    {
+      s.set(true);
+    }
+    if (moveStick.getRawButton(5)&&s.get())
+    {
+      s.set(false);
+    }
     // if (a.get())
     // {
     //    intake.set(.25);
     // }
-    // if (b.get())
+                  // System.out.println("Test 1");
+                  // System.out.println(moveStick.getRawButton(1));
+                  // if (moveStick.getRawButton(1))
+                  //   {
+                  //      System.out.println("Test 2");
+                  //      ramp.set(.25);
+                  //      System.out.println("Test 3");
+                  //   }
+                  //   else if (moveStick.getRawButton(3))
+                  //     {
+                  //       ramp.set(.5);
+                  //     }
+                  //     else 
+                  //     {
+                  //        ramp.set(0);
+                  //     }
+   
+    // else if (!b.get())
     // {
-    //    ramp.set(.25);
+    //    ramp.set(0);
+    //    System.out.println("Test 3");
     // }
+    // System.out.println("Test 4");
+    
   }
 
   /**
