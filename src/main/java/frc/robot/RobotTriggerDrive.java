@@ -64,13 +64,15 @@ public class RobotTriggerDrive extends RobotDrive {
 	 * @param backwardsTrigger is the trigger axis being used to control the backward movement of the robot
 	 * @param rotateAxis is the axis being used to control the left & right movements of the robot
 	 */
-	public void arcadeDrive(XboxController moveStick, final int forwardsTrigger, final int backwardsTrigger, final int rotateAxis) {
+	public void arcadeDrive(XboxController moveStick, final int forwardsTrigger, final int backwardsTrigger, final int rotateAxis, final boolean slow) {
 		// Moves robot using both trigger axes
-		double moveValue = moveStick.getTriggerAxis(Hand.kRight) - moveStick.getTriggerAxis(Hand.kLeft);
+		double moveValue = .75 * (moveStick.getTriggerAxis(Hand.kRight) - moveStick.getTriggerAxis(Hand.kLeft));
 		
 		// Rotates robot left and right on a single axis
 		double rotateValue = moveStick.getX(Hand.kLeft);
-		
+		if (slow) {
+			moveValue = moveValue/2;
+		}
 		// Drives robot at provided move and rotate values
 		arcadeDrive(moveValue, -rotateValue-.03, true);
 		System.out.println(rotateValue);

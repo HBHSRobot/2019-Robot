@@ -40,8 +40,8 @@ public class Robot extends IterativeRobot {
   Timer timer;
 	SpeedControllerGroup left;
   SpeedControllerGroup right;
-  SpeedControllerGroup intake;
-  SpeedControllerGroup ramp;
+  SpeedControllerGroup intake, intake2;
+  SpeedControllerGroup ramp, ramp2;
   SpeedController leftDrive;
   SpeedController rightDrive; 
   RobotTriggerDrive drive;
@@ -82,9 +82,12 @@ public class Robot extends IterativeRobot {
     // buttonValueB = moveStick.getRawButton(2);
     // stickr = new Joystick(1);
  
-    ramp = new SpeedControllerGroup(new VictorSP(1), new VictorSP(0));
-    // intake = new SpeedControllerGroup(new VictorSP(3), new VictorSP(2));
+    ramp = new SpeedControllerGroup(new VictorSP(1));
+    ramp2 = new SpeedControllerGroup(new VictorSP(0));
     
+    intake = new SpeedControllerGroup(new VictorSP(3));
+    intake2 = new SpeedControllerGroup(new VictorSP(2));
+
     hbRobot = new RobotTriggerDrive(leftDrive, rightDrive);
     // moveStick = new GenericHID(0);
 
@@ -121,8 +124,9 @@ public class Robot extends IterativeRobot {
     m_autoSelected = m_chooser.getSelected();
     // autoSelected = SmartDashboard.getString("Auto Selector",
     // defaultAuto);
+    c.start();
     System.out.println("Auto selected: " + m_autoSelected);
-    // s.set(true);
+    
   }
   
 
@@ -134,19 +138,60 @@ public class Robot extends IterativeRobot {
     switch (m_autoSelected) {
       case kCustomAuto:
         // Put custom auto code here
+        // hbRobot.arcadeDrive(.25, .03, true);
+       
+        
         break;
       case kDefaultAuto:
       default:
-      //Piston p = new Piston();
-      Timer.delay(20);
-      // s.set(true);
-      // Timer.delay(1);
-      // s.set(false);
-      // // if (s.get())
-      // // {
-      // //   s.set(false);
-      // // }
-      // // }
+      if (moveStick.getRawButton(7)){
+        hbRobot.arcadeDrive(moveStick, forwardsTrigger, backwardsTrigger, rotateAxis, true);
+      } else {
+        hbRobot.arcadeDrive(moveStick, forwardsTrigger, backwardsTrigger, rotateAxis, false);
+      }
+        if (moveStick.getRawButton(6)&&!s.get())
+        {
+          s.set(true);
+        }
+        if (moveStick.getRawButton(5)&&s.get())
+        {
+          s.set(false);
+        }
+        if (moveStick.getRawButton(2))
+          {
+            ramp.set(.25);
+            ramp2.set(-.25);
+          }
+          else if (moveStick.getRawButton(4))
+            {
+              ramp.set(1);
+              ramp2.set(-1);
+            }
+            else 
+              {
+                ramp.set(0);
+                ramp2.set(0);
+              }
+        if (moveStick.getRawButton(1))
+         {
+          intake.set(.5);
+          intake2.set(-.5);
+         }
+        else
+        {
+          intake.set(0);
+          intake2.set(0);
+        }
+        if (moveStick.getRawButton(3))
+        {
+         ramp.set(-.25);
+         ramp2.set(.25);
+        }
+        else if (!moveStick.getRawButton(2) && !moveStick.getRawButton(4))
+        {
+         ramp.set(0);
+         ramp2.set(0);
+        }
 
       break;
     }
@@ -161,13 +206,11 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
-    // hbRobot.tankDrive(stickl.getY(), stickr.getY());
-    hbRobot.arcadeDrive(moveStick, forwardsTrigger, backwardsTrigger, rotateAxis);
-    // s.set(true);
-      // if (s.get())
-      // {
-      //   s.set(false);
-      // }
+    if (moveStick.getRawButton(7)){
+      hbRobot.arcadeDrive(moveStick, forwardsTrigger, backwardsTrigger, rotateAxis, true);
+    } else {
+      hbRobot.arcadeDrive(moveStick, forwardsTrigger, backwardsTrigger, rotateAxis, false);
+    }
     if (moveStick.getRawButton(6)&&!s.get())
     {
       s.set(true);
@@ -176,33 +219,47 @@ public class Robot extends IterativeRobot {
     {
       s.set(false);
     }
-    // if (a.get())
+    if (moveStick.getRawButton(2))
+      {
+        ramp.set(.25);
+        ramp2.set(-.25);
+        intake.set(.5);
+        intake2.set(-.5);
+      }
+      else if (moveStick.getRawButton(4))
+        {
+          ramp.set(1);
+          ramp2.set(-1);
+        }
+        else 
+          {
+            ramp.set(0);
+            ramp2.set(0);
+            intake.set(0);
+            intake2.set(0);
+            
+          }
+    // if (moveStick.getRawButton(1))
+    //  {
+    //   intake.set(.5);
+    //   intake2.set(-.5);
+    //  }
+    // else
     // {
-    //    intake.set(.25);
+    //   intake.set(0);
+    //   intake2.set(0);
     // }
-                  // System.out.println("Test 1");
-                  // System.out.println(moveStick.getRawButton(1));
-                  // if (moveStick.getRawButton(1))
-                  //   {
-                  //      System.out.println("Test 2");
-                  //      ramp.set(.25);
-                  //      System.out.println("Test 3");
-                  //   }
-                  //   else if (moveStick.getRawButton(3))
-                  //     {
-                  //       ramp.set(.5);
-                  //     }
-                  //     else 
-                  //     {
-                  //        ramp.set(0);
-                  //     }
+    if (moveStick.getRawButton(3))
+    {
+     ramp.set(-.25);
+     ramp2.set(.25);
+    }
+    else if (!moveStick.getRawButton(2) && !moveStick.getRawButton(4))
+    {
+     ramp.set(0);
+     ramp2.set(0);
+    }
    
-    // else if (!b.get())
-    // {
-    //    ramp.set(0);
-    //    System.out.println("Test 3");
-    // }
-    // System.out.println("Test 4");
     
   }
 
